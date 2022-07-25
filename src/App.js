@@ -6,6 +6,8 @@ import Admin from "./components/Admin";
 import Request from "./components/Request";
 import Transfer from "./components/Transfer";
 import RegisVerification from "./components/RegisVerification";
+import RequestVerification from "./components/RequestVerification";
+import History from "./components/History";
 
 function App() {
   return (
@@ -16,8 +18,10 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/request" element={<Request/>}/>
         <Route path="/transfer" element={<Transfer/>}/>
+        <Route path="/history" element={<History/>}/>
         <Route path="/admin" element={<Admin/>}/>
         <Route path="/admin/verify-registration" element={<RegisVerification/>}/>
+        <Route path="/admin/verify-request" element={<RequestVerification/>}/>
       </Routes>
     </BrowserRouter>
   );

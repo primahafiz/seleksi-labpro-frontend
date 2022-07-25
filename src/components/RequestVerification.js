@@ -1,7 +1,7 @@
 import React from 'react'
 import {Helmet} from "react-helmet";
 
-function RegisVerification() {
+function RequestVerification() {
   return (
     <div>
         <Helmet>
@@ -19,10 +19,10 @@ function RegisVerification() {
                   <a className="nav-link text-white" href="/admin">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white font-weight-bold" href="#">Regis Data</a>
+                  <a className="nav-link text-white" href="#">Regis Data</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">Request Data</a>
+                  <a className="nav-link text-white font-weight-bold" href="#" tabindex="-1" aria-disabled="true">Request Data</a>
                 </li>
               </ul>
               <form className="form-inline">
@@ -32,16 +32,14 @@ function RegisVerification() {
           </nav>
         </div>
         <div className="container mb-3">
-            <h4 className='my-4 mx-5'>Unverified Registration Data</h4>
+            <h4 className='my-4 mx-5'>Unverified Request Data</h4>
             <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
                     <div className="col-md-12 col-lg-3 mt-2 text-center">
-                    <a href="https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116">
-                            <img className='img-fluid' src='https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116' alt="" style={{ height:'100px' }}/>
-                        </a>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
                         <h5>Primesz</h5>
                         <p>Primanda Adyatma Hafiz</p>
+                    </div>
+                    <div className="col-md-12 col-lg-3 mt-2 text-center">
+                        <h5>+ 300 USD</h5>
                     </div>
                     <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
                     <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
@@ -51,15 +49,13 @@ function RegisVerification() {
                         <button className='btn btn-danger'>Reject</button>
                     </div>
             </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                    <a href="https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116">
-                            <img className='img-fluid' src='https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116' alt="" style={{ height:'100px' }}/>
-                        </a>
-                    </div>
+            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
                     <div className="col-md-12 col-lg-3 mt-2 text-center">
                         <h5>Primesz</h5>
                         <p>Primanda Adyatma Hafiz</p>
+                    </div>
+                    <div className="col-md-12 col-lg-3 mt-2 text-center">
+                        <h5>+ 300 USD</h5>
                     </div>
                     <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
                     <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
@@ -69,15 +65,13 @@ function RegisVerification() {
                         <button className='btn btn-danger'>Reject</button>
                     </div>
             </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a href="https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116">
-                            <img className='img-fluid' src='https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116' alt="" style={{ height:'100px' }}/>
-                        </a>
-                    </div>
+            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
                     <div className="col-md-12 col-lg-3 mt-2 text-center">
                         <h5>Primesz</h5>
                         <p>Primanda Adyatma Hafiz</p>
+                    </div>
+                    <div className="col-md-12 col-lg-3 mt-2 text-center">
+                        <h5>+ 300 USD</h5>
                     </div>
                     <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
                     <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
@@ -92,4 +86,4 @@ function RegisVerification() {
   )
 }
 
-export default RegisVerification
+export default RequestVerification

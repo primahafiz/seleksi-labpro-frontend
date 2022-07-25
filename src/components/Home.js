@@ -58,7 +58,7 @@ function Home() {
                       <FontAwesomeIcon icon={faFile} size="4x"/>
                   </span>
                   <h3 className='mt-5'>History</h3>
-                  <p className='mt-5'>Look your list of past transaction</p>
+                  <p className='mt-5'>Check your list of past transaction</p>
               </a>
           </div>
         </div>
