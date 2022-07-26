@@ -25,7 +25,7 @@ function Admin() {
                   <a className="nav-link text-white" href="#">Regis Data</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">Request Data</a>
+                  <a className="nav-link text-white" href="#" aria-disabled="true">Request Data</a>
                 </li>
               </ul>
               <form className="form-inline">

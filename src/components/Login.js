@@ -1,7 +1,27 @@
-import React from 'react'
+import axios from 'axios';
+import React, {useState} from 'react'
 import {Helmet} from "react-helmet";
+import { useNavigate } from "react-router-dom"
 
 function Login() {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+
+    const loginUser = async(e) => {
+        e.preventDefault()
+        try{
+            await axios.post('http://localhost:8081/login', {
+                username,
+                password
+            }).then(response => {
+                navigate(response.data.redirectPath)
+            })
+        }catch(err){
+            console.log(err)
+        }
+    }
+
   return (
     <div className='container'>
         <Helmet>
@@ -11,15 +31,15 @@ function Login() {
             <div className='row mt-5 mx-1 justify-content-md-center align-items-center'>
                 <div className='mt-5 border border-dark border-opacity-25 border-2 rounded-1 bg-white col-12 col-md-8 col-lg-6 p-5'>
                     <h2>Log in</h2>
-                    <form action="" className='mt-4'>
+                    <form onSubmit={loginUser} className='mt-4'>
                         <div className='border-top border-bottom py-3'>
                             <div className="mb-3">
                                 <label className="form-label font-weight-bold fs-6">Username</label>
-                                <input type="email" className="form-control"/>
+                                <input className="form-control" value={username} onChange={(e) => setUsername(e.target.value)}/>
                             </div>
                             <div className="mb-3">
                                 <label className="form-label font-weight-bold fs-6">Password</label>
-                                <input type="password" className="form-control"/>
+                                <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                         </div>
                         <div className='d-flex justify-content-between mt-4'>
