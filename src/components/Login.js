@@ -11,9 +11,11 @@ function Login() {
     const loginUser = async(e) => {
         e.preventDefault()
         try{
-            await axios.post('http://localhost:8081/login', {
+            await axios.post('/login', {
                 username,
                 password
+            },{
+                withCredentials:true
             }).then(response => {
                 navigate(response.data.redirectPath)
             })

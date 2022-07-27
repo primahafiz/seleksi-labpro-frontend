@@ -1,7 +1,38 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import {Helmet} from "react-helmet";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 
 function RegisVerification() {
+
+  const [regisData,setRegisData] = useState([])
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    getRegisData()
+  },[])
+
+  const getRegisData = async () => {
+    const response = await axios.get("/admin/verify-registration",{
+      withCredentials:true
+    });
+    setRegisData(response.data.data);
+  }
+
+  const acceptRegis = async(username) => {
+    await axios.put(`/admin/verify-registration/accept/${username}`,{
+      withCredentials:true
+    });
+    window.location.reload()
+  }
+
+  const declineRegis = async(username) => {
+    await axios.put(`/admin/verify-registration/decline/${username}`,{
+      withCredentials:true
+    });
+    window.location.reload()
+  }
+
   return (
     <div>
         <Helmet>
@@ -33,60 +64,29 @@ function RegisVerification() {
         </div>
         <div className="container mb-3">
             <h4 className='my-4 mx-5'>Unverified Registration Data</h4>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                    <a href="https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116">
-                            <img className='img-fluid' src='https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116' alt="" style={{ height:'100px' }}/>
-                        </a>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Primesz</h5>
-                        <p>Primanda Adyatma Hafiz</p>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-success'>Accept</button>
-                    </div>
-                    <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-danger'>Reject</button>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                    <a href="https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116">
-                            <img className='img-fluid' src='https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116' alt="" style={{ height:'100px' }}/>
-                        </a>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Primesz</h5>
-                        <p>Primanda Adyatma Hafiz</p>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-success'>Accept</button>
-                    </div>
-                    <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-danger'>Reject</button>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a href="https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116">
-                            <img className='img-fluid' src='https://storage.cloud.google.com/bnmo-data/ktm-13520022%20(1).jpg_1658317327116' alt="" style={{ height:'100px' }}/>
-                        </a>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Primesz</h5>
-                        <p>Primanda Adyatma Hafiz</p>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-success'>Accept</button>
-                    </div>
-                    <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-danger'>Reject</button>
-                    </div>
-            </div>
+            {regisData.map((user,index) => (
+                <div key={user.Username} className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                        <div className="col-md-12 col-lg-3 mt-2 text-center">
+                        <a href={user.Photo}>
+                                <img className='img-fluid' src={user.Photo} alt="" style={{ height:'100px' }}/>
+                            </a>
+                        </div>
+                        <div className="col-md-12 col-lg-3 mt-2 text-center">
+                            <h5>{user.Username}</h5>
+                            <p>{user.Name}</p>
+                        </div>
+                        <div className="col-md-12 col-lg-2 mt-2 text-center">
+                            <p>{user.formattedDate}</p>
+                        </div>
+                        <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                        <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
+                            <button className='btn btn-success' onClick={() => acceptRegis(user.Username)}>Accept</button>
+                        </div>
+                        <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
+                            <button className='btn btn-danger' onClick={() => declineRegis(user.Username)}>Decline</button>
+                        </div>
+                </div>
+            ))}
         </div>
     </div>
   )
