@@ -1,9 +1,50 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
+import axios from 'axios'
 import {Helmet} from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faArrowRightLong, faCircleCheck, faCircleXmark, faHourglass} from "@fortawesome/free-solid-svg-icons";
 
 function History() {
+
+  const [transactionHistory, setTransactionHistory] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [maxPage, setMaxPage] = useState(0)
+  const [username, setUsername] = useState('')
+
+  useEffect(() => {
+    getTransactionHistory()
+  },[])
+
+  const getTransactionHistory = async (page) => {
+    const response = await axios.get("/api/history",
+    {
+      params : {
+        page : page
+      }
+    },
+    {
+      withCredentials:true
+    });
+    setTransactionHistory(response.data.ans);
+    setUsername(response.data.username)
+    setMaxPage(response.data.maxPage)
+  }
+
+  const toNextPage = async () => {
+    if(currentPage != maxPage){
+      await getTransactionHistory(currentPage+1)
+      setCurrentPage(currentPage+1)
+    }
+  }
+
+  const toPreviousPage = async() => {
+    if(currentPage != 1){
+      await getTransactionHistory(currentPage-1)
+      setCurrentPage(currentPage-1)
+    }
+  }
+
+
   return (
     <div>
         <Helmet>
@@ -38,73 +79,128 @@ function History() {
         </div>
         <div className="container mb-3">
             <h4 className='my-4 mx-5'>History Transaction</h4>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Request Transaction</h5>
+            {transactionHistory.map((trans,index) => {
+                if(trans.TypeTransaction == 'request'){
+                  if(trans.IsProceed == 0){
+                    return (
+                    <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                      <div className="col-md-12 col-lg-3 mt-2 text-center">
+                          <h5>Request Transaction</h5>
+                      </div>
+                      <div className="col-md-12 col-lg-3 mt-2 text-center">
+                          <a className='font-weight-bold mx-3'>Pending</a>
+                          <FontAwesomeIcon icon={faHourglass}/>
+                      </div>
+                      <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                      <div className="col-md-12 col-lg-2 mt-2 text-center">
+                            <p>{trans.createdAt}</p>
+                        </div>
+                      <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
+                          {trans.RequestValue<0?
+                            (<h5>{trans.RequestValue} {trans.RequestCurrency}</h5>):
+                            (<h5>+{trans.RequestValue} {trans.RequestCurrency}</h5>)
+                          }
+                      </div>
                     </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a className='font-weight-bold mx-3'>Accepted</a>
-                        <FontAwesomeIcon icon={faCircleCheck} style={{color:'green'}}/>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
-                        <h5>+ 300 USD</h5>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Request Transaction</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a className='font-weight-bold mx-3'>Declined</a>
-                        <FontAwesomeIcon icon={faCircleXmark} style={{color:'red'}}/>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
-                        <h5>+ 300 USD</h5>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Request Transaction</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a className='font-weight-bold mx-3'>Pending</a>
-                        <FontAwesomeIcon icon={faHourglass}/>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
-                        <h5>+ 300 USD</h5>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Transfer Transaction</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a className='font-weight-bold mx-3'>Primesz</a>
-                        <FontAwesomeIcon icon={faArrowRightLong}/>
-                        <a className='font-weight-bold mx-3'>Tayo</a>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
-                        <h5>+ 30000 USD</h5>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Transfer Transaction</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <a className='font-weight-bold mx-3'>Primesz</a>
-                        <FontAwesomeIcon icon={faArrowLeftLong}/>
-                        <a className='font-weight-bold mx-3'>Tayo</a>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
-                        <h5>- 30000 USD</h5>
-                    </div>
-            </div>
+                   )
+                  }
+                  else{
+                    if(trans.IsAccepted == 0){
+                      return (
+                        <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                          <div className="col-md-12 col-lg-3 mt-2 text-center">
+                              <h5>Request Transaction</h5>
+                          </div>
+                          <div className="col-md-12 col-lg-3 mt-2 text-center">
+                              <a className='font-weight-bold mx-3'>Declined</a>
+                              <FontAwesomeIcon icon={faCircleXmark} style={{color:'red'}}/>
+                          </div>
+                          <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                          <div className="col-md-12 col-lg-2 mt-2 text-center">
+                            <p>{trans.createdAt}</p>
+                          </div>
+                          <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
+                          {trans.RequestValue<0?
+                            (<h5>{trans.RequestValue} {trans.RequestCurrency}</h5>):
+                            (<h5>+{trans.RequestValue} {trans.RequestCurrency}</h5>)
+                          }
+                          </div>
+                        </div>
+                      )
+                    }else{
+                        return (
+                          <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                            <div className="col-md-12 col-lg-3 mt-2 text-center">
+                                <h5>Request Transaction</h5>
+                            </div>
+                            <div className="col-md-12 col-lg-3 mt-2 text-center">
+                                <a className='font-weight-bold mx-3'>Accepted</a>
+                                <FontAwesomeIcon icon={faCircleCheck} style={{color:'green'}}/>
+                            </div>
+                            <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                            <div className="col-md-12 col-lg-2 mt-2 text-center">
+                              <p>{trans.createdAt}</p>
+                            </div>
+                            <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
+                            {trans.RequestValue<0?
+                            (<h5>{trans.RequestValue} {trans.RequestCurrency}</h5>):
+                            (<h5>+{trans.RequestValue} {trans.RequestCurrency}</h5>)
+                            }
+                            </div>
+                          </div>
+                        )
+                    }
+                  }
+                }else{
+                    if(trans.UsernameSender == username){
+                      return (
+                        <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                          <div className="col-md-12 col-lg-3 mt-2 text-center">
+                              <h5>Transfer Transaction</h5>
+                          </div>
+                          <div className="col-md-12 col-lg-3 mt-2 text-center">
+                              <a className='font-weight-bold mx-3'>{trans.UsernameSender}</a>
+                              <FontAwesomeIcon icon={faArrowRightLong}/>
+                              <a className='font-weight-bold mx-3'>{trans.UsernameReceiver}</a>
+                          </div>
+                          <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                          <div className="col-md-12 col-lg-2 mt-2 text-center">
+                            <p>{trans.createdAt}</p>
+                          </div>
+                          <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
+                              <h5>- {trans.TransferValue} {trans.TransferCurrency}</h5>
+                          </div>
+                        </div>
+                      )
+                    }else{
+                      return(
+                        <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                          <div className="col-md-12 col-lg-3 mt-2 text-center">
+                              <h5>Transfer Transaction</h5>
+                          </div>
+                          <div className="col-md-12 col-lg-3 mt-2 text-center">
+                              <a className='font-weight-bold mx-3'>{trans.UsernameReceiver}</a>
+                              <FontAwesomeIcon icon={faArrowLeftLong}/>
+                              <a className='font-weight-bold mx-3'>{trans.UsernameSender}</a>
+                          </div>
+                          <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                          <div className="col-md-12 col-lg-2 mt-2 text-center">
+                            <p>{trans.createdAt}</p>
+                          </div>
+                          <div className="col-md-12 col-lg-2 mt-2 text-center mx-3">
+                              <h5>+ {trans.TransferValue} {trans.TransferCurrency}</h5>
+                          </div>
+                        </div>
+                      )
+                    }
+                }
+            
+            })}
+        </div>
+        <div className="pagination justify-content-center my-3">
+          <li class="page-item"><button class="page-link" href="#" onClick={toPreviousPage} style={{ width : '90px' }}>Previous</button></li>
+          <li class="page-item"><button class="page-link" href="#">{currentPage}</button></li>
+          <li class="page-item"><button class="page-link" href="#" onClick={toNextPage} style={{ width : '90px' }}>Next</button></li>
         </div>
     </div>
   )
