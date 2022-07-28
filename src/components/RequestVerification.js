@@ -1,7 +1,36 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import {Helmet} from "react-helmet";
+import axios from 'axios'
 
 function RequestVerification() {
+
+  const [requestData,setRequestData] = useState([])
+  
+  useEffect(() => {
+    getRequestData()
+  },[])
+
+  const getRequestData = async () => {
+    const response = await axios.get("/api/admin/verify-request",{
+      withCredentials:true
+    });
+    setRequestData(response.data.data);
+  }
+
+  const acceptRequest = async (id) => {
+    const response = await axios.put(`/api/admin/verify-request/accept/${id}`,{
+      withCredentials:true
+    });
+    window.location.reload()
+  }
+
+  const declineRequest = async (id) => {
+    const response = await axios.put(`/api/admin/verify-request/decline/${id}`,{
+      withCredentials:true
+    });
+    window.location.reload()
+  }
+
   return (
     <div>
         <Helmet>
@@ -33,54 +62,26 @@ function RequestVerification() {
         </div>
         <div className="container mb-3">
             <h4 className='my-4 mx-5'>Unverified Request Data</h4>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Primesz</h5>
-                        <p>Primanda Adyatma Hafiz</p>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>+ 300 USD</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-success'>Accept</button>
-                    </div>
-                    <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-danger'>Reject</button>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Primesz</h5>
-                        <p>Primanda Adyatma Hafiz</p>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>+ 300 USD</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-success'>Accept</button>
-                    </div>
-                    <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-danger'>Reject</button>
-                    </div>
-            </div>
-            <div className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>Primesz</h5>
-                        <p>Primanda Adyatma Hafiz</p>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center">
-                        <h5>+ 300 USD</h5>
-                    </div>
-                    <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
-                    <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-success'>Accept</button>
-                    </div>
-                    <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
-                        <button className='btn btn-danger'>Reject</button>
-                    </div>
-            </div>
+            {requestData.map((reqData,index) => (
+              <div key={reqData.IDRequest} className="row justify-content-center align-items-center bg-white mt-3 p-4 mx-5 border rounded-2">
+                      <div className="col-md-12 col-lg-3 mt-2 text-center">
+                          <h5>{reqData.Username}</h5>
+                      </div>
+                      <div className="col-md-12 col-lg-3 mt-2 text-center">
+                          {reqData.RequestValue<0?
+                          (<h5>{reqData.RequestValue} {reqData.RequestCurrency}</h5>):
+                          (<h5>+{reqData.RequestValue} {reqData.RequestCurrency}</h5>)
+                          }
+                      </div>
+                      <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
+                      <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
+                          <button className='btn btn-success' onClick={() => acceptRequest(reqData.IDRequest)}>Accept</button>
+                      </div>
+                      <div className="col-md-12  col-lg-1 mt-2 text-center mx-3">
+                          <button className='btn btn-danger' onClick={() => declineRequest(reqData.IDRequest)}>Decline</button>
+                      </div>
+              </div>
+            ))}
         </div>
     </div>
   )

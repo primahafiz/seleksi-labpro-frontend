@@ -1,10 +1,29 @@
-import React from 'react'
+import React, {useEffect,useState} from 'react'
 import {Helmet} from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDownLong, faArrowUpLong, faArrowUpFromBracket, faFile} from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios'
 
 function Home() {
+
+  const [name,setName] = useState('')
+  const [balance,setBalance] = useState(null)
+
+  useEffect(() => {
+    getInfo()
+    console.log(name)
+  },[])
+
+  const getInfo = async () => {
+    const response = await axios.get("/api",{
+      withCredentials:true
+    });
+    console.log(response)
+    setName(response.data.name);
+    setBalance(response.data.saldo)
+  }
   return (
+
     <div>
          <Helmet>
                 <style>{'body { background-color: #f4f5f6; }'}</style>
@@ -21,13 +40,13 @@ function Home() {
                   <a className="nav-link text-white font-weight-bold" href="/">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#">Request</a>
+                  <a className="nav-link text-white" href="/request">Request</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">Transfer</a>
+                  <a className="nav-link text-white" href="/transfer" >Transfer</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">History</a>
+                  <a className="nav-link text-white" href="/history">History</a>
                 </li>
               </ul>
               <form className="form-inline">
@@ -37,15 +56,17 @@ function Home() {
           </nav>
         </div>
         <div className="container-lg">
+          <h3 className='mt-3 mx-2'>Hello, {name}</h3>
+          <h5 className='mt-1 mx-2'>Balance = {balance}</h5>
           <div className='row row-eq-height mt-5 mx-2 justify-content-center align-items-center'>
-              <a href='/' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
+              <a href='/request' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
                   <span>
                       <FontAwesomeIcon icon={faArrowUpFromBracket} size="4x"/>
                   </span>
                   <h3 className='mt-5'>Request</h3>
                   <p className='mt-5'>Request some money to Admin</p>
               </a>
-              <a href='/' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
+              <a href='/transfer' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
                   <span>
                       <FontAwesomeIcon icon={faArrowUpLong} size="4x"/>
                       <FontAwesomeIcon icon={faArrowDownLong} size="4x"/>
@@ -53,7 +74,7 @@ function Home() {
                   <h3 className='mt-5'>Transfer</h3>
                   <p className='mt-5'>Transfer your balance to another</p>
               </a>
-              <a href='/' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
+              <a href='/history' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
                   <span>
                       <FontAwesomeIcon icon={faFile} size="4x"/>
                   </span>

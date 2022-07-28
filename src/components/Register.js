@@ -18,7 +18,7 @@ function Register() {
             formData.append('password',password)
             formData.append('name',name)
             formData.append('photo',photo)
-            await axios.post('/register', formData,{withCredentials:true})
+            await axios.post('/api/register', formData,{withCredentials:true})
             .then(response => {
                 navigate(response.data.redirectPath)
             })

@@ -1,33 +1,31 @@
 import React, {useState,useEffect} from 'react'
 import {Helmet} from "react-helmet";
 import axios from 'axios'
-import { useNavigate } from "react-router-dom"
 
 function RegisVerification() {
 
   const [regisData,setRegisData] = useState([])
-  const navigate = useNavigate()
 
   useEffect(() => {
     getRegisData()
   },[])
 
   const getRegisData = async () => {
-    const response = await axios.get("/admin/verify-registration",{
+    const response = await axios.get("/api/admin/verify-registration",{
       withCredentials:true
     });
     setRegisData(response.data.data);
   }
 
   const acceptRegis = async(username) => {
-    await axios.put(`/admin/verify-registration/accept/${username}`,{
+    await axios.put(`/api/admin/verify-registration/accept/${username}`,{
       withCredentials:true
     });
     window.location.reload()
   }
 
   const declineRegis = async(username) => {
-    await axios.put(`/admin/verify-registration/decline/${username}`,{
+    await axios.put(`/api/admin/verify-registration/decline/${username}`,{
       withCredentials:true
     });
     window.location.reload()

@@ -13,7 +13,7 @@ function Admin() {
   })
 
   const getName = async () => {
-    const response = await axios.get("/admin",{
+    const response = await axios.get("/api/admin",{
       withCredentials:true
     });
     setName(response.data.name);
