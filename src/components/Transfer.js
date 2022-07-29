@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import {Helmet} from "react-helmet";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
 function Transfer() {
 
@@ -9,6 +10,7 @@ function Transfer() {
   const [transferValue, setTransferValue] = useState(0)
   const [transferCurrency, setTransferCurrency] = useState('IDR')
   const [errorMsg, setErrorMsg] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     getCurrency()
@@ -39,6 +41,14 @@ function Transfer() {
     }
   }
 
+  const logoutUser = async (e) => {
+    e.preventDefault()
+    await axios.post("/api/logout",{
+      withCredentials:true
+    });
+    navigate('/login')
+  }
+
   return (
   
     <div>
@@ -57,16 +67,19 @@ function Transfer() {
                   <a className="nav-link text-white" href="/">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#">Request</a>
+                  <a className="nav-link text-white" href="/request">Request</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white font-weight-bold" href="#" tabindex="-1" aria-disabled="true">Transfer</a>
+                  <a className="nav-link text-white font-weight-bold" href="/transfer">Transfer</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">History</a>
+                  <a className="nav-link text-white" href="/history">History</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="/profile">Profile</a>
                 </li>
               </ul>
-              <form className="form-inline">
+              <form onSubmit={logoutUser} className="form-inline">
                 <button className="btn shadow-none text-white border-0 px-0" type="submit">Log out</button>
               </form>
             </div>

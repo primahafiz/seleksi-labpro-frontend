@@ -3,6 +3,7 @@ import axios from 'axios'
 import {Helmet} from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faArrowRightLong, faCircleCheck, faCircleXmark, faHourglass} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom"
 
 function History() {
 
@@ -10,6 +11,7 @@ function History() {
   const [currentPage, setCurrentPage] = useState(1)
   const [maxPage, setMaxPage] = useState(0)
   const [username, setUsername] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     getTransactionHistory()
@@ -44,6 +46,14 @@ function History() {
     }
   }
 
+  const logoutUser = async (e) => {
+    e.preventDefault()
+    await axios.post("/api/logout",{
+      withCredentials:true
+    });
+    navigate('/login')
+  }
+
 
   return (
     <div>
@@ -62,16 +72,19 @@ function History() {
                   <a className="nav-link text-white" href="/">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#">Request</a>
+                  <a className="nav-link text-white" href="/request">Request</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">Transfer</a>
+                  <a className="nav-link text-white" href="/transfer" >Transfer</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white font-weight-bold" href="#" tabindex="-1" aria-disabled="true">History</a>
+                  <a className="nav-link text-white font-weight-bold" href="/history">History</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="/profile">Profile</a>
                 </li>
               </ul>
-              <form className="form-inline">
+              <form onSubmit={logoutUser} className="form-inline">
                 <button className="btn shadow-none text-white border-0 px-0" type="submit">Log out</button>
               </form>
             </div>

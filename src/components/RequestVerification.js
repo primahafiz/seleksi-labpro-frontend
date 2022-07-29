@@ -1,10 +1,12 @@
 import React, {useState,useEffect} from 'react'
 import {Helmet} from "react-helmet";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 
 function RequestVerification() {
 
   const [requestData,setRequestData] = useState([])
+  const navigate = useNavigate()
   
   useEffect(() => {
     getRequestData()
@@ -31,6 +33,14 @@ function RequestVerification() {
     window.location.reload()
   }
 
+  const logoutUser = async (e) => {
+    e.preventDefault()
+    await axios.post("/api/logout",{
+      withCredentials:true
+    });
+    navigate('/login')
+  }
+
   return (
     <div>
         <Helmet>
@@ -45,16 +55,19 @@ function RequestVerification() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="/admin">Home <span className="sr-only">(current)</span></a>
+                  <a className="nav-link text-white font-weight-bold" href="/admin">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="#">Regis Data</a>
+                  <a className="nav-link text-white" href="/admin/verify-registration">Regis Data</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white font-weight-bold" href="#" tabindex="-1" aria-disabled="true">Request Data</a>
+                  <a className="nav-link text-white" href="/admin/verify-request" aria-disabled="true">Request Data</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="/admin/search" aria-disabled="true">Search Customer</a>
                 </li>
               </ul>
-              <form className="form-inline">
+              <form onSubmit={logoutUser} className="form-inline">
                 <button className="btn shadow-none text-white border-0 px-0" type="submit">Log out</button>
               </form>
             </div>

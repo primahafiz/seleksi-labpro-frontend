@@ -8,6 +8,9 @@ import Transfer from "./components/Transfer";
 import RegisVerification from "./components/RegisVerification";
 import RequestVerification from "./components/RequestVerification";
 import History from "./components/History";
+import Profile from "./components/Profile";
+import Search from "./components/Search";
+import ProfileAdmin from "./components/ProfileAdmin";
 
 function App() {
   return (
@@ -19,9 +22,12 @@ function App() {
         <Route path="/request" element={<Request/>}/>
         <Route path="/transfer" element={<Transfer/>}/>
         <Route path="/history" element={<History/>}/>
+        <Route path="/profile" element={<Profile/>}/>
         <Route path="/admin" element={<Admin/>}/>
         <Route path="/admin/verify-registration" element={<RegisVerification/>}/>
         <Route path="/admin/verify-request" element={<RequestVerification/>}/>
+        <Route path="/admin/search" element={<Search/>}/>
+        <Route path="/admin/profile/:user" element={<ProfileAdmin/>}/>
       </Routes>
     </BrowserRouter>
   );

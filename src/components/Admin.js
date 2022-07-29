@@ -1,12 +1,13 @@
 import React, {useState,useEffect} from 'react'
 import {Helmet} from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faArrowUpFromBracket, faIdCard} from "@fortawesome/free-solid-svg-icons";
+import {faArrowUpFromBracket, faIdCard, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios'
-
+import { useNavigate } from "react-router-dom"
 
 function Admin() {
   const [name,setName] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     getName()
@@ -17,6 +18,14 @@ function Admin() {
       withCredentials:true
     });
     setName(response.data.name);
+  }
+
+  const logoutUser = async (e) => {
+    e.preventDefault()
+    await axios.post("/api/logout",{
+      withCredentials:true
+    });
+    navigate('/login')
   }
 
   return (
@@ -41,8 +50,11 @@ function Admin() {
                 <li className="nav-item">
                   <a className="nav-link text-white" href="/admin/verify-request" aria-disabled="true">Request Data</a>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="/admin/search" aria-disabled="true">Search Customer</a>
+                </li>
               </ul>
-              <form className="form-inline">
+              <form onSubmit={logoutUser} className="form-inline">
                 <button className="btn shadow-none text-white border-0 px-0" type="submit">Log out</button>
               </form>
             </div>
@@ -64,6 +76,13 @@ function Admin() {
                   </span>
                   <h3 className='mt-5'>Request Data</h3>
                   <p className='mt-5'>Verify customer's request transaction</p>
+              </a>
+              <a href='/admin/search' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
+                  <span>
+                      <FontAwesomeIcon icon={faMagnifyingGlass} size="4x"/>
+                  </span>
+                  <h3 className='mt-5'>Search Customer</h3>
+                  <p className='mt-5'>Search and find customer's profile data</p>
               </a>
           </div>
         </div>

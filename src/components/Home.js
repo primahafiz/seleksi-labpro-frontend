@@ -3,11 +3,13 @@ import {Helmet} from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDownLong, faArrowUpLong, faArrowUpFromBracket, faFile} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 
 function Home() {
 
   const [name,setName] = useState('')
   const [balance,setBalance] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     getInfo()
@@ -21,6 +23,14 @@ function Home() {
     console.log(response)
     setName(response.data.name);
     setBalance(response.data.saldo)
+  }
+
+  const logoutUser = async (e) => {
+    e.preventDefault()
+    await axios.post("/api/logout",{
+      withCredentials:true
+    });
+    navigate('/login')
   }
   return (
 
@@ -48,8 +58,11 @@ function Home() {
                 <li className="nav-item">
                   <a className="nav-link text-white" href="/history">History</a>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link text-white" href="/profile">Profile</a>
+                </li>
               </ul>
-              <form className="form-inline">
+              <form onSubmit={logoutUser} className="form-inline">
                 <button className="btn shadow-none text-white border-0 px-0" type="submit">Log out</button>
               </form>
             </div>
