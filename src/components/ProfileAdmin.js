@@ -14,8 +14,20 @@ function ProfileAdmin() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getProfile()
+        checkAccess()
       },[])
+
+      const checkAccess = async () => {
+        const response = await axios.get("/api/isAdmin",{
+          withCredentials:true
+        });
+        console.log(response.data)
+        if(response.data.illegalAccessRedirect){
+          navigate(response.data.illegalAccessRedirect)
+        }else{
+          await getProfile()
+        }
+      }
     
       const getProfile = async () => {
         console.log(user)

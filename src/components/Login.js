@@ -6,22 +6,23 @@ import { useNavigate } from "react-router-dom"
 function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
     const navigate = useNavigate()
 
     const loginUser = async(e) => {
         e.preventDefault()
-        try{
-            await axios.post('/api/login', {
-                username,
-                password
-            },{
-                withCredentials:true
-            }).then(response => {
-                navigate(response.data.redirectPath)
-            })
-        }catch(err){
-            console.log(err)
+        const response = await axios.post('/api/login', {
+            username,
+            password
+        },{
+            withCredentials:true
+        })
+        if(response.data.error){
+            setErrorMsg(response.data.error)
+        }else{
+            navigate(response.data.redirectPath)
         }
+        
     }
 
   return (
@@ -42,6 +43,9 @@ function Login() {
                             <div className="mb-3">
                                 <label className="form-label font-weight-bold fs-6">Password</label>
                                 <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            </div>
+                            <div className="mb-3">
+                              <a className="text-danger">{errorMsg}</a>
                             </div>
                         </div>
                         <div className='d-flex justify-content-between mt-4'>

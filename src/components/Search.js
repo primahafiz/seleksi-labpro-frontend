@@ -9,6 +9,20 @@ function Search() {
     const [searchData, setSearchData] = useState([])
     const navigate = useNavigate()
 
+    useEffect(() => {
+      checkAccess()
+    })
+
+    const checkAccess = async () => {
+      const response = await axios.get("/api/isAdmin",{
+        withCredentials:true
+      });
+      console.log(response.data)
+      if(response.data.illegalAccessRedirect){
+        navigate(response.data.illegalAccessRedirect)
+      }
+    }
+
     const getSearchData = async (e) => {
         setSearchInput(e.target.value)
         const response = await axios.get("/api/search",

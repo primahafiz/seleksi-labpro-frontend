@@ -9,8 +9,20 @@ function RegisVerification() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    getRegisData()
+    checkAccess()
   },[])
+
+  const checkAccess = async () => {
+    const response = await axios.get("/api/isAdmin",{
+      withCredentials:true
+    });
+    console.log(response.data)
+    if(response.data.illegalAccessRedirect){
+      navigate(response.data.illegalAccessRedirect)
+    }else{
+      await getRegisData()
+    }
+  }
 
   const getRegisData = async () => {
     const response = await axios.get("/api/admin/verify-registration",{
@@ -55,10 +67,10 @@ function RegisVerification() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link text-white font-weight-bold" href="/admin">Home <span className="sr-only">(current)</span></a>
+                  <a className="nav-link text-white" href="/admin">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="/admin/verify-registration">Regis Data</a>
+                  <a className="nav-link text-white font-weight-bold" href="/admin/verify-registration">Regis Data</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link text-white" href="/admin/verify-request" aria-disabled="true">Request Data</a>

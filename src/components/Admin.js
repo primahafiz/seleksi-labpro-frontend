@@ -6,19 +6,22 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 
 function Admin() {
-  const [name,setName] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
-    getName()
+    checkAccess()
   })
 
-  const getName = async () => {
-    const response = await axios.get("/api/admin",{
+  const checkAccess = async () => {
+    const response = await axios.get("/api/isAdmin",{
       withCredentials:true
     });
-    setName(response.data.name);
+    console.log(response.data)
+    if(response.data.illegalAccessRedirect){
+      navigate(response.data.illegalAccessRedirect)
+    }
   }
+
 
   const logoutUser = async (e) => {
     e.preventDefault()
@@ -61,7 +64,6 @@ function Admin() {
           </nav>
         </div>
         <div className="container-lg">
-          <h3 className='mt-3'>Hello, {name}</h3>
           <div className='row row-eq-height mt-5 mx-2 justify-content-center align-items-center' >
               <a href='/admin/verify-registration' className="text-dark text-decoration-none border m-2 col-9 col-sm-5 col-lg-3 bg-white px-3 py-5 text-center">
                   <span>

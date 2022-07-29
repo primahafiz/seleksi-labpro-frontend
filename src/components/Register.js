@@ -9,21 +9,20 @@ function Register() {
     const [password, setPassword] = useState('')
     const [photo, setPhoto] = useState(null)
     const navigate = useNavigate()
+    const [errorMsg, setErrorMsg] = useState('')
 
     const addUser = async(e) => {
         e.preventDefault()
-        try{
-            const formData = new FormData()
-            formData.append('username',username)
-            formData.append('password',password)
-            formData.append('name',name)
-            formData.append('photo',photo)
-            await axios.post('/api/register', formData,{withCredentials:true})
-            .then(response => {
-                navigate(response.data.redirectPath)
-            })
-        }catch(err){
-            console.log(err)
+        const formData = new FormData()
+        formData.append('username',username)
+        formData.append('password',password)
+        formData.append('name',name)
+        formData.append('photo',photo)
+        const response = await axios.post('/api/register', formData,{withCredentials:true})
+        if(response.data.error){
+            setErrorMsg(response.data.error)
+        }else{
+            navigate(response.data.redirectPath)
         }
     }
 
@@ -60,6 +59,9 @@ function Register() {
                             <div className="mb-3">
                                 <label className="form-label font-weight-bold fs-6">Upload Identity Card</label>
                                 <input className="form-control-file" type="file" onChange={handleChange}/>
+                            </div>
+                            <div className="mb-3">
+                              <a className="text-danger">{errorMsg}</a>
                             </div>
                         </div>
                         <div className='d-flex justify-content-between mt-4'>

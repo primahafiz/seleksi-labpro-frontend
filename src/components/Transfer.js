@@ -13,11 +13,23 @@ function Transfer() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    getCurrency()
+    checkAccess()
   },[])
 
+  const checkAccess = async () => {
+    const response = await axios.get("/api/isCustomer",{
+      withCredentials:true
+    });
+    console.log(response.data)
+    if(response.data.illegalAccessRedirect){
+      navigate(response.data.illegalAccessRedirect)
+    }else{
+      await getCurrency()
+    }
+  }
+
   const getCurrency = async () => {
-    const response = await axios.get("/api/transfer",{
+    const response = await axios.get("/api/currency",{
       withCredentials:true
     });
     console.log(response)

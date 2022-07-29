@@ -12,8 +12,20 @@ function Profile() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        getProfile()
+      checkAccess()
       },[])
+
+      const checkAccess = async () => {
+        const response = await axios.get("/api/isCustomer",{
+          withCredentials:true
+        });
+        console.log(response.data)
+        if(response.data.illegalAccessRedirect){
+          navigate(response.data.illegalAccessRedirect)
+        }else{
+          await getProfile()
+        }
+      }
     
       const getProfile = async () => {
         const response = await axios.get("/api/profile",{
@@ -47,7 +59,7 @@ function Profile() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link text-white font-weight-bold" href="/">Home <span className="sr-only">(current)</span></a>
+                  <a className="nav-link text-white" href="/">Home <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link text-white" href="/request">Request</a>
@@ -59,7 +71,7 @@ function Profile() {
                   <a className="nav-link text-white" href="/history">History</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link text-white" href="/profile">Profile</a>
+                  <a className="nav-link text-white font-weight-bold" href="/profile">Profile</a>
                 </li>
               </ul>
               <form onSubmit={logoutUser} className="form-inline">

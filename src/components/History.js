@@ -14,8 +14,20 @@ function History() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    getTransactionHistory()
+    checkAccess()
   },[])
+
+  const checkAccess = async () => {
+    const response = await axios.get("/api/isCustomer",{
+      withCredentials:true
+    });
+    console.log(response.data)
+    if(response.data.illegalAccessRedirect){
+      navigate(response.data.illegalAccessRedirect)
+    }else{
+      await getTransactionHistory()
+    }
+  }
 
   const getTransactionHistory = async (page) => {
     const response = await axios.get("/api/history",

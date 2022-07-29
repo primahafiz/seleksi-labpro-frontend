@@ -12,11 +12,23 @@ function Request() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    getCurrency()
+    checkAccess()
   },[])
 
+  const checkAccess = async () => {
+    const response = await axios.get("/api/isCustomer",{
+      withCredentials:true
+    });
+    console.log(response.data)
+    if(response.data.illegalAccessRedirect){
+      navigate(response.data.illegalAccessRedirect)
+    }else{
+      await getCurrency()
+    }
+  }
+
   const getCurrency = async () => {
-    const response = await axios.get("/api/request",{
+    const response = await axios.get("/api/currency",{
       withCredentials:true
     });
     console.log(response)
@@ -80,7 +92,7 @@ function Request() {
           </nav>
         </div>
         <div>
-            <div className='row mx-2 justify-content-md-center align-items-center'>
+            <div className='row mx-2 justify-content-md-center align-items-center mb-3'>
                 <div className='mt-5 border border-dark border-opacity-25 border-2 rounded-1 bg-white col-12 col-md-8 col-lg-6 p-5'>
                     <h2>Request Transaction</h2>
                     <form onSubmit={addRequest} className='mt-4'>
