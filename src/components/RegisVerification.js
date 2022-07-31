@@ -13,7 +13,7 @@ function RegisVerification() {
   },[])
 
   const checkAccess = async () => {
-    const response = await axios.get("https://api-bnmo.herokuapp.com/api/isAdmin",{
+    const response = await axios.get("/api/isAdmin",{
       withCredentials:true
     });
     console.log(response.data)
@@ -25,21 +25,21 @@ function RegisVerification() {
   }
 
   const getRegisData = async () => {
-    const response = await axios.get("https://api-bnmo.herokuapp.com/api/admin/verify-registration",{
+    const response = await axios.get("/api/admin/verify-registration",{
       withCredentials:true
     });
     setRegisData(response.data.data);
   }
 
   const acceptRegis = async(username) => {
-    await axios.put(`https://api-bnmo.herokuapp.com/api/admin/verify-registration/accept/${username}`,{
+    await axios.put(`/api/admin/verify-registration/accept/${username}`,{
       withCredentials:true
     });
     window.location.reload()
   }
 
   const declineRegis = async(username) => {
-    await axios.put(`https://api-bnmo.herokuapp.com/api/admin/verify-registration/decline/${username}`,{
+    await axios.put(`/api/admin/verify-registration/decline/${username}`,{
       withCredentials:true
     });
     window.location.reload()
@@ -47,7 +47,7 @@ function RegisVerification() {
 
   const logoutUser = async (e) => {
     e.preventDefault()
-    await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
+    await axios.post("/api/logout",{
       withCredentials:true
     });
     navigate('/login')

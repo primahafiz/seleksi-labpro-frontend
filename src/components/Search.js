@@ -14,7 +14,7 @@ function Search() {
     })
 
     const checkAccess = async () => {
-      const response = await axios.get("https://api-bnmo.herokuapp.com/api/isAdmin",{
+      const response = await axios.get("/api/isAdmin",{
         withCredentials:true
       });
       console.log(response.data)
@@ -25,7 +25,7 @@ function Search() {
 
     const getSearchData = async (e) => {
         setSearchInput(e.target.value)
-        const response = await axios.get("https://api-bnmo.herokuapp.com/api/search",
+        const response = await axios.get("/api/search",
         {
             params : {
                 searchInput : e.target.value
@@ -42,7 +42,7 @@ function Search() {
 
       const logoutUser = async (e) => {
         e.preventDefault()
-        await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
+        await axios.post("/api/logout",{
           withCredentials:true
         });
         navigate('/login')

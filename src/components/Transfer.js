@@ -17,7 +17,7 @@ function Transfer() {
   },[])
 
   const checkAccess = async () => {
-    const response = await axios.get("https://api-bnmo.herokuapp.com/api/isCustomer",{
+    const response = await axios.get("/api/isCustomer",{
       withCredentials:true
     });
     console.log(response.data)
@@ -29,7 +29,7 @@ function Transfer() {
   }
 
   const getCurrency = async () => {
-    const response = await axios.get("https://api-bnmo.herokuapp.com/api/currency",{
+    const response = await axios.get("/api/currency",{
       withCredentials:true
     });
     console.log(response)
@@ -38,7 +38,7 @@ function Transfer() {
 
   const addTransfer = async (e) => {
     e.preventDefault()
-    const response = await axios.post("https://api-bnmo.herokuapp.com/api/transfer",
+    const response = await axios.post("/api/transfer",
     {
       usernameReceiver,
       transferValue,
@@ -55,7 +55,7 @@ function Transfer() {
 
   const logoutUser = async (e) => {
     e.preventDefault()
-    await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
+    await axios.post("/api/logout",{
       withCredentials:true
     });
     navigate('/login')

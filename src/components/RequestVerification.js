@@ -13,7 +13,7 @@ function RequestVerification() {
   },[])
 
   const checkAccess = async () => {
-    const response = await axios.get("https://api-bnmo.herokuapp.com/api/isAdmin",{
+    const response = await axios.get("/api/isAdmin",{
       withCredentials:true
     });
     console.log(response.data)
@@ -25,21 +25,21 @@ function RequestVerification() {
   }
 
   const getRequestData = async () => {
-    const response = await axios.get("https://api-bnmo.herokuapp.com/api/admin/verify-request",{
+    const response = await axios.get("/api/admin/verify-request",{
       withCredentials:true
     });
     setRequestData(response.data.data);
   }
 
   const acceptRequest = async (id) => {
-    const response = await axios.put(`https://api-bnmo.herokuapp.com/api/admin/verify-request/accept/${id}`,{
+    const response = await axios.put(`/api/admin/verify-request/accept/${id}`,{
       withCredentials:true
     });
     window.location.reload()
   }
 
   const declineRequest = async (id) => {
-    const response = await axios.put(`https://api-bnmo.herokuapp.com/api/admin/verify-request/decline/${id}`,{
+    const response = await axios.put(`/api/admin/verify-request/decline/${id}`,{
       withCredentials:true
     });
     window.location.reload()
@@ -47,7 +47,7 @@ function RequestVerification() {
 
   const logoutUser = async (e) => {
     e.preventDefault()
-    await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
+    await axios.post("/api/logout",{
       withCredentials:true
     });
     navigate('/login')
