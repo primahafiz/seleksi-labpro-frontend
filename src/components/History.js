@@ -18,7 +18,7 @@ function History() {
   },[])
 
   const checkAccess = async () => {
-    const response = await axios.get("/api/isCustomer",{
+    const response = await axios.get("https://api-bnmo.herokuapp.com/api/isCustomer",{
       withCredentials:true
     });
     console.log(response.data)
@@ -30,7 +30,7 @@ function History() {
   }
 
   const getTransactionHistory = async (page) => {
-    const response = await axios.get("/api/history",
+    const response = await axios.get("https://api-bnmo.herokuapp.com/api/history",
     {
       params : {
         page : page
@@ -60,7 +60,7 @@ function History() {
 
   const logoutUser = async (e) => {
     e.preventDefault()
-    await axios.post("/api/logout",{
+    await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
       withCredentials:true
     });
     navigate('/login')

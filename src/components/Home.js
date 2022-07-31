@@ -14,7 +14,7 @@ function Home() {
   },[])
 
   const checkAccess = async () => {
-    const response = await axios.get("/api/isCustomer",{
+    const response = await axios.get("https://api-bnmo.herokuapp.com/api/isCustomer",{
       withCredentials:true
     });
     console.log(response.data)
@@ -25,7 +25,7 @@ function Home() {
 
   const logoutUser = async (e) => {
     e.preventDefault()
-    await axios.post("/api/logout",{
+    await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
       withCredentials:true
     });
     navigate('/login')

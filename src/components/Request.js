@@ -16,7 +16,7 @@ function Request() {
   },[])
 
   const checkAccess = async () => {
-    const response = await axios.get("/api/isCustomer",{
+    const response = await axios.get("https://api-bnmo.herokuapp.com/api/isCustomer",{
       withCredentials:true
     });
     console.log(response.data)
@@ -28,7 +28,7 @@ function Request() {
   }
 
   const getCurrency = async () => {
-    const response = await axios.get("/api/currency",{
+    const response = await axios.get("https://api-bnmo.herokuapp.com/api/currency",{
       withCredentials:true
     });
     console.log(response)
@@ -39,7 +39,7 @@ function Request() {
     if(typeRequest=='decrease'){
       setAmount(amount*-1)
     }
-    const response = await axios.post("/api/request",
+    const response = await axios.post("https://api-bnmo.herokuapp.com/api/request",
     {
       requestValue : amount,
       requestCurrency : choosenCurrency
@@ -50,7 +50,7 @@ function Request() {
 
   const logoutUser = async (e) => {
     e.preventDefault()
-    await axios.post("/api/logout",{
+    await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
       withCredentials:true
     });
     navigate('/login')

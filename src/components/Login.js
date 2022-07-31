@@ -11,7 +11,7 @@ function Login() {
 
     const loginUser = async(e) => {
         e.preventDefault()
-        const response = await axios.post('/api/login', {
+        const response = await axios.post('https://api-bnmo.herokuapp.com/api/login', {
             username,
             password
         },{

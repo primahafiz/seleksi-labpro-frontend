@@ -16,7 +16,7 @@ function Profile() {
       },[])
 
       const checkAccess = async () => {
-        const response = await axios.get("/api/isCustomer",{
+        const response = await axios.get("https://api-bnmo.herokuapp.com/api/isCustomer",{
           withCredentials:true
         });
         console.log(response.data)
@@ -28,7 +28,7 @@ function Profile() {
       }
     
       const getProfile = async () => {
-        const response = await axios.get("/api/profile",{
+        const response = await axios.get("https://api-bnmo.herokuapp.com/api/profile",{
           withCredentials:true
         });
         console.log(response.data)
@@ -39,7 +39,7 @@ function Profile() {
       }
       const logoutUser = async (e) => {
         e.preventDefault()
-        await axios.post("/api/logout",{
+        await axios.post("https://api-bnmo.herokuapp.com/api/logout",{
           withCredentials:true
         });
         navigate('/login')

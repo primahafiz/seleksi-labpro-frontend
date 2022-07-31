@@ -18,7 +18,7 @@ function Register() {
         formData.append('password',password)
         formData.append('name',name)
         formData.append('photo',photo)
-        const response = await axios.post('/api/register', formData,{withCredentials:true})
+        const response = await axios.post('https://api-bnmo.herokuapp.com/api/register', formData,{withCredentials:true})
         if(response.data.error){
             setErrorMsg(response.data.error)
         }else{
