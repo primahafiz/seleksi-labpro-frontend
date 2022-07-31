@@ -67,7 +67,7 @@ function Register() {
                         <div className='d-flex justify-content-between mt-4'>
                             <button type="submit" class="btn font-weight-bold fs-6 text-white" style={{backgroundColor : '#137cbd'}}>Register</button>
                             <p>
-                                Have account already?&nbsp;
+                                or&nbsp;
                                 <a href="/login">Log in now</a>
                             </p>
                         </div>
