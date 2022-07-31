@@ -51,7 +51,7 @@ function Login() {
                         <div className='d-flex justify-content-between mt-4'>
                             <button type="submit" class="btn font-weight-bold fs-6 text-white" style={{backgroundColor : '#137cbd'}}>Log in</button>
                             <p>
-                                Don't have account? &nbsp;
+                                Have no account?&nbsp;
                                 <a href="/register">Register now</a>
                             </p>
                         </div>
