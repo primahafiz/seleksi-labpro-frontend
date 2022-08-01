@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDownLong, faArrowUpLong, faArrowUpFromBracket, faFile} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
+import Spinner from 'react-bootstrap/Spinner';
 
 function Home() {
+
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
 
@@ -21,6 +24,7 @@ function Home() {
     if(response.data.illegalAccessRedirect){
       navigate(response.data.illegalAccessRedirect)
     }
+    setLoading(false)
   }
 
   const logoutUser = async (e) => {
@@ -32,9 +36,14 @@ function Home() {
   }
   return (
     <div>
-    <Helmet>
-           <style>{'body { background-color: #f4f5f6; }'}</style>
-   </Helmet>
+      <Helmet>
+      <style>{'body { background-color: #f4f5f6; }'}</style>
+    </Helmet>
+    {loading? (
+    <div className="d-flex justify-content-md-center align-items-center vh-100">
+    <Spinner animation="border" size="lg" />
+  </div>) :
+  (<div>
    <div>
      <nav className="navbar navbar-expand-lg navbar-light px-4" style={{backgroundColor : '#137cbd'}}>
        <a className="navbar-brand text-white" href="#">BNMO</a>
@@ -92,6 +101,8 @@ function Home() {
      </div>
    </div>
  </div>
+ )}
+    </div>
   )
 }
 
