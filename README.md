@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# BNMO (Frontend Side)
+BNMO is a Web Application which has bank integration features such as transfer and request money. Not only customer, BNMO is also used by Bank's Admin in order to monitor all transaction by customer. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Build By
+- Primanda Adyatma Hafiz (13520022)
 
-## Available Scripts
+## How To Run
+#### CLI
+1. Clone this repository
+2. Install npm
+3. Run ```npm install``` command inside repository folder
+4. Server is started on http://localhost:3000/ and automatically connected to API https://api-bnmo.herokuapp.com/
 
-In the project directory, you can run:
+#### Deployed server
+You can access the website on https://bnmo-app.herokuapp.com/
 
-### `npm start`
+## Design Pattern
+1. Design Pattern Composite </br>
+Composite pattern is used when an object is consisted of some simpler object and that simpler object is consisted of way simpler object and so on. In this case, I use this pattern to represent Customer object because it consists of multiple transactions that it already did
+2. Design Pattern Builder </br>
+Builder pattern is used when building complex object using simpler object and using step by step approach. In this case, I use this pattern when building Customer objects by adding request and transfer transactions to them.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technologies Used
+- react (v13.3.0)
+- bootstrapt (v4.4.1)
+- font-awesome (v4.7.0)
+- axios (v0.7.2)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How To Use
+You can run the server on local with CLI or access deployed server on https://bnmo-app.herokuapp.com/.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Endpoint
+<table>
+  <thead>
+    <td>Endpoint</td>
+    <td>Description</td>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/</td>
+      <td>Customer Home Page</td
+    </tr>
+    <tr>
+      <td>/login</td>
+      <td>Login Page</td
+    </tr>
+    <tr>
+      <td>/register</td>
+      <td>Register Page</td
+    </tr>
+    <tr>
+      <td>/request</td>
+      <td>Request Form Page</td
+    </tr>
+    <tr>
+      <td>/transfer</td>
+      <td>Transfer Form Page</td
+    </tr>
+    <tr>
+      <td>/history</td>
+      <td>Transaction History Page</td
+    </tr>
+    <tr>
+      <td>/profile</td>
+      <td>Profile Data Page</td
+    </tr>
+    <tr>
+      <td>/admin</td>
+      <td>Admin Home Page</td
+    </tr>
+    <tr>
+      <td>/admin/verify-registration</td>
+      <td>Admin's Verify Registration Page</td
+    </tr>
+    <tr>
+      <td>/admin/verify-request</td>
+      <td>Admin's Verify Request Page</td
+    </tr>
+    <tr>
+      <td>/admin/search</td>
+      <td>Admin's Search Customer Page</td
+    </tr>
+    <tr>
+      <td>/admin/profile/:username</td>
+      <td>Admin's Search Customer's Profile Result Page</td
+    </tr>
+</table>
+        
+## Additional Feature
+- Live search customer
+- Loading state while fecthing API
