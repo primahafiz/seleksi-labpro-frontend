@@ -39,12 +39,13 @@ function Request() {
   }
 
   const addRequest = async () => {
+    var value = amount
     if(typeRequest=='decrease'){
-      setAmount(amount*-1)
+      value *= -1
     }
     const response = await axios.post("/api/request",
     {
-      requestValue : amount,
+      requestValue : value,
       requestCurrency : choosenCurrency
     },{
       withCredentials:true
