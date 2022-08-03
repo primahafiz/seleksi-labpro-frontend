@@ -106,7 +106,8 @@ function RequestVerification() {
                             (<h5>+{reqData.RequestValue} {reqData.RequestCurrency}</h5>)
                             }
                         </div>
-                        <div className="col-md-12 col-lg-3 mt-2 text-center"></div>
+                        <div className="col-md-12 col-lg-1 mt-2 text-center"></div>
+                        <div className="col-md-12 col-lg-2 mt-2 text-center">{reqData.formattedDate}</div>
                         <div className="col-md-12 col-lg-1 mt-2 text-center mx-3">
                             <button className='btn btn-success' onClick={() => acceptRequest(reqData.IDRequest)}>Accept</button>
                         </div>
