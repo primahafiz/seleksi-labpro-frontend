@@ -13,6 +13,7 @@ BNMO is a Web Application which has bank integration features such as transfer a
 
 #### Deployed server
 You can access the website on https://bnmo-app.herokuapp.com/
+Note : Sometimes the website will show error when first loaded. If error occur just refresh the website
 
 ## Design Pattern
 1. Design Pattern Composite </br>
@@ -22,7 +23,7 @@ Builder pattern is used when building complex object using simpler object and us
 
 ## Technologies Used
 - react (v13.3.0)
-- bootstrapt (v4.4.1)
+- bootstrap (v4.4.1)
 - font-awesome (v4.7.0)
 - axios (v0.7.2)
 
@@ -66,7 +67,7 @@ You can run the server on local with CLI or access deployed server on https://bn
     </tr>
     <tr>
       <td>/admin</td>
-      <td>Admin Home Page</td
+      <td>Admin's Home Page</td
     </tr>
     <tr>
       <td>/admin/verify-registration</td>
