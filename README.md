@@ -12,8 +12,8 @@ BNMO is a Web Application which has bank integration features such as transfer a
 4. Server is started on http://localhost:3000/ and automatically connected to API https://api-bnmo.herokuapp.com/
 
 #### Deployed server
-You can access the website on https://bnmo-app.herokuapp.com/
-Note : Sometimes the website will show error when first loaded. If error occur just refresh the website
+You can access the website on https://bnmo-app.herokuapp.com/ </br>
+Note : Sometimes the website will show error when first loaded. If error occurs just refresh the website
 
 ## Design Pattern
 1. Design Pattern Composite </br>
